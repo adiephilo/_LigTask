@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff3f7">
+  <title>StudySpace | Student Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard" aria-label="StudySpace home">
+        <span class="brand-mark">✦</span>
+        <span>StudySpace</span>
+      </a>
+      <p class="nav-label">WORKSPACE</p>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-page="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-link" data-page="review"><span>◷</span> Review Room</button>
+      </nav>
+      <div class="sidebar-note">
+        <span class="note-icon">✧</span>
+        <strong>Small steps count.</strong>
+        <p>Make a plan, focus on one thing, and take breaks when you need them.</p>
+      </div>
+      <div class="sidebar-footer">Your study space · Saved on this device</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="pageEyebrow">YOUR PRODUCTIVITY OVERVIEW</p>
+          <h1 id="pageTitle">Welcome to your dashboard</h1>
+        </div>
+        <div class="today-chip" id="todayLabel">Study day</div>
+      </header>
+
+      <section class="page active" id="dashboardPage">
+        <div class="welcome-card">
+          <div>
+            <p class="eyebrow light">MAKE TODAY COUNT</p>
+            <h2>One task at a time.</h2>
+            <p>Organize your schoolwork and celebrate every task you finish.</p>
+            <button class="primary-button" data-go="review">Go to Review Room <span>→</span></button>
+          </div>
+          <div class="welcome-art" aria-hidden="true">📚<span>✦</span></div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card"><span class="stat-icon pink">☷</span><span class="stat-label">Total tasks</span><strong id="totalCount">0</strong><small>Tasks in your list</small></article>
+          <article class="stat-card"><span class="stat-icon green">✓</span><span class="stat-label">Completed</span><strong id="completedCount">0</strong><small>You've made progress</small></article>
+          <article class="stat-card"><span class="stat-icon purple">◷</span><span class="stat-label">Remaining</span><strong id="remainingCount">0</strong><small>Still to work on</small></article>
+        </div>
+
+        <section class="panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">STAY ORGANIZED</p><h2>Add a task</h2></div>
+          </div>
+          <form id="taskForm" class="task-form">
+            <label class="sr-only" for="taskInput">Task name</label>
+            <input id="taskInput" maxlength="120" placeholder="e.g. Read Chapter 4 for Networking" required>
+            <button class="primary-button" type="submit">＋ Add task</button>
+          </form>
+          <p id="formMessage" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="panel task-panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">YOUR CHECKLIST</p><h2>My tasks</h2></div>
+            <button id="clearCompleted" class="text-button" type="button">Clear completed</button>
+          </div>
+          <ul id="taskList" class="task-list"></ul>
+        </section>
+      </section>
+
+      <section class="page" id="reviewPage">
+        <div class="review-intro">
+          <p class="eyebrow">FIND YOUR RHYTHM</p>
+          <h2>Choose a review technique</h2>
+          <p>Pick a focus style that suits your study session. The timer will use the recommended focus and break times.</p>
+        </div>
+
+        <div class="technique-grid" id="techniqueGrid">
+          <button class="technique-card selected" data-technique="pomodoro">
+            <span class="technique-emoji">🍅</span><strong>Pomodoro</strong>
+            <span class="technique-time">25 min focus · 5 min break</span>
+            <small>Short, focused study sessions with regular breaks.</small>
+          </button>
+          <button class="technique-card" data-technique="short">
+            <span class="technique-emoji">🌱</span><strong>Short Sprint</strong>
+            <span class="technique-time">15 min focus · 3 min break</span>
+            <small>A gentle option for starting a small task.</small>
+          </button>
+          <button class="technique-card" data-technique="deep">
+            <span class="technique-emoji">🎧</span><strong>Deep Focus</strong>
+            <span class="technique-time">50 min focus · 10 min break</span>
+            <small>Longer sessions for reading or challenging topics.</small>
+          </button>
+          <button class="technique-card" data-technique="52-17">
+            <span class="technique-emoji">⚖️</span><strong>52 / 17 Method</strong>
+            <span class="technique-time">52 min focus · 17 min break</span>
+            <small>A longer work block followed by a proper rest.</small>
+          </button>
+          <button class="technique-card" data-technique="flow">
+            <span class="technique-emoji">🌊</span><strong>Flowtime</strong>
+            <span class="technique-time">Custom focus · 5 min break</span>
+            <small>Choose your own focus length; pause when you need to.</small>
+          </button>
+        </div>
+
+        <section class="timer-panel">
+          <div class="timer-topline">
+            <div><p class="eyebrow">YOUR CURRENT SESSION</p><h2 id="timerTechnique">Pomodoro</h2></div>
+            <span class="phase-pill" id="phaseLabel">FOCUS TIME</span>
+          </div>
+          <div class="timer-ring" id="timerRing">
+            <div class="timer-center">
+              <span id="timerMode">FOCUS</span>
+              <strong id="timerDisplay">25:00</strong>
+              <small id="timerHint">Ready when you are</small>
+            </div>
+          </div>
+          <div class="timer-controls">
+            <button id="startPauseButton" class="primary-button" type="button">Start focus</button>
+            <button id="resetTimerButton" class="secondary-button" type="button">Reset</button>
+            <button id="skipPhaseButton" class="text-button" type="button">Skip phase →</button>
+          </div>
+          <div class="session-info">
+            <span>Completed focus sessions</span>
+            <strong id="sessionCount">0</strong>
+          </div>
+          <div class="flow-settings" id="flowSettings" hidden>
+            <label for="flowMinutes">Flowtime focus length</label>
+            <div class="flow-input-row">
+              <input id="flowMinutes" type="number" min="5" max="180" value="30">
+              <span>minutes</span>
+              <button id="applyFlow" class="secondary-button" type="button">Apply</button>
+            </div>
+          </div>
+          <p class="timer-note">Tip: Keep one clear goal for each focus session. You can pause or reset the timer anytime.</p>
+        </section>
+      </section>
+
+      <footer class="main-footer">StudySpace · Your tasks and review settings are saved in this browser.</footer>
+    </main>
+  </div>
+</body>
+</html>
